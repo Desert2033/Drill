@@ -7,6 +7,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private Text logText;
 
+    [SerializeField] private Button createRoomButton;
+
+    [SerializeField] private Button joinRoomButton;
+
     void Start()
     {
         PhotonNetwork.NickName = "Player" + Random.Range(0, 10000);
@@ -20,11 +24,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Log("Connect to master");
+
+        createRoomButton.gameObject.SetActive(true);
+
+        joinRoomButton.gameObject.SetActive(true);
     }
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2 });
+            PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2 });
     }
 
     public void JoinRoom()
@@ -36,7 +44,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         Log("Joined in room");
 
-        PhotonNetwork.LoadLevel("MainScene");
+        PhotonNetwork.LoadLevel("Game");
     }
 
     private void Log(string message)
